@@ -4,9 +4,12 @@ export default class Ray {
     public origin: Vec;
     public direction: Vec;
 
+    public inverseDirection: Vec;
+
     constructor(origin: Vec, direction: Vec) {
         this.origin = origin;
         this.direction = direction.norm();
+        this.inverseDirection = new Vec(1 / this.direction.a, 1 / this.direction.b);
     }
 
     public IntersectBox (box: Box): Intersect {
@@ -18,19 +21,11 @@ export default class Ray {
     }
 
     public gettx(x: number) {
-        return (x - this.origin.a) / this.direction.a;
+        return (x - this.origin.a) * this.inverseDirection.a;
     }
 
     public getty(y: number) {
-        return (y - this.origin.b) / this.direction.b;
-    }
-
-    public absGettx(x: number) {
-        return (x - this.origin.a) / Math.abs(this.direction.a);
-    }
-
-    public absGetty(y: number) {
-        return (y - this.origin.b) / Math.abs(this.direction.b);
+        return (y - this.origin.b) * this.inverseDirection.b;
     }
 
     public getPoint(t: number) {

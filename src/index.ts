@@ -196,10 +196,10 @@ function getParentOrigin(childOrigin: Vec, rootOrigin: Vec, parentSize: number) 
  * @param mask If the ray didn't originally come from top left, the mask can be used to get the correct index for the orientaiton
  */
 function getFirstChildIndex(ray: Ray, parentNode: QuadNode, parentScale: number) {
-    const tx0 = ray.absGettx(parentNode.origin.a);
-    const tx1 = ray.absGettx(parentNode.origin.a + parentScale * 0.5);
-    const ty0 = ray.absGetty(parentNode.origin.b);
-    const ty1 = ray.absGetty(parentNode.origin.b + parentScale * 0.5);
+    const tx0 = ray.gettx(parentNode.origin.a);
+    const tx1 = ray.gettx(parentNode.origin.a + parentScale * 0.5);
+    const ty0 = ray.getty(parentNode.origin.b);
+    const ty1 = ray.getty(parentNode.origin.b + parentScale * 0.5);
 
     // The ray enters in one of the top two squares
     // ty1 < tx0 -> The ray enters square 2 (from the left side)
@@ -219,8 +219,8 @@ function getChildOrigin(parentOrigin: Vec, parentScale: number, childIndex: numb
 function getNextChildIndex(currentChildOrigin: Vec, childSize: number, currentChildIndex: number, ray: Ray): number | null {
     // Since it is assumed that the ray moves in the +/+ direction
     // The ray can only exit the current child below or to the right
-    const tRight = ray.absGettx(currentChildOrigin.a + childSize);
-    const tBottom = ray.absGetty(currentChildOrigin.b + childSize);
+    const tRight = ray.gettx(currentChildOrigin.a + childSize);
+    const tBottom = ray.getty(currentChildOrigin.b + childSize);
 
     const nextChildIndex = currentChildIndex | (tRight < tBottom ? 1 : 2);
     if (nextChildIndex === currentChildIndex) {
