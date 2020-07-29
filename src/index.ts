@@ -42,19 +42,20 @@ function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.strokeStyle = "#000000";
 
-    // Draw the points
-    ctx.beginPath();
-    ctx.arc(point1.a, point1.b, 10, 0, 2 * Math.PI);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.arc(point2.a, point2.b, 10, 0, 2 * Math.PI);
-    ctx.stroke();
-
     // Draw the ray
     drawRay(ray);
 
     // Traverse and draw the quad tree
     drawQuadTree(Math.pow(2, 9), ray);
+
+    // Draw the points
+    ctx.fillStyle = "red";
+    ctx.beginPath();
+    ctx.arc(point1.a, point1.b, 5, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(point2.a, point2.b, 5, 0, 2 * Math.PI);
+    ctx.fill();
 
     requestAnimationFrame(draw);
 }
@@ -103,7 +104,7 @@ function drawQuadTree(rootSize: number, ray: Ray) {
     // Bitmask use to fix child indices if ray isn't traveling in +/+ direction
     const childIndexMask = (ray.direction.a > 0 ? 0 : 1) + (ray.direction.b > 0 ? 0 : 2);
 
-    const maxDepth = 8;
+    const maxDepth = 9;
     currentNode = 0;
 
     // Draw the root node
