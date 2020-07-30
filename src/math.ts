@@ -33,9 +33,20 @@ export class Vec {
     }
 }
 
-export class Box {
+export class AABB {
     public a: Vec;
     public b: Vec;
+
+    constructor (a: Vec, b: Vec) {
+        this.a = a;
+        this.b = b;
+    }
+
+    public intersects(other: AABB) {
+        const xIntersect = Math.max(this.a.a, other.a.a) - Math.min(this.b.a, other.b.a) <= 0;
+        const yIntersect = Math.max(this.a.b, other.a.b) - Math.min(this.b.b, other.b.b) <= 0;
+        return xIntersect && yIntersect;
+    }
 }
 
 export class Intersect {
